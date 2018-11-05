@@ -103,6 +103,14 @@ func (twilio *Twilio) SendMMS(from, to, body, mediaUrl, statusCallback, applicat
 	return
 }
 
+func (twilio *Twilio) SendMMSWithCopilot(messagingServiceSid, to, body, mediaUrl, statusCallback, applicationSid string) (smsResponse *SmsResponse, exception *Exception, err error) {
+	formValues := initFormValues(body, mediaUrl, statusCallback, applicationSid)
+	formValues.Set("MessagingServiceSid", messagingServiceSid)
+
+	smsResponse, exception, err = twilio.sendMessage(formValues)
+	return
+}
+
 // Core method to send message
 func (twilio *Twilio) sendMessage(formValues url.Values) (smsResponse *SmsResponse, exception *Exception, err error) {
 	twilioUrl := twilio.BaseUrl + "/Accounts/" + twilio.AccountSid + "/Messages.json"
