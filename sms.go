@@ -103,8 +103,9 @@ func (twilio *Twilio) SendMMS(from, to, body, mediaUrl, statusCallback, applicat
 	return
 }
 
+//Send MMS with Copilot
 func (twilio *Twilio) SendMMSWithCopilot(messagingServiceSid, to, body, mediaUrl, statusCallback, applicationSid string) (smsResponse *SmsResponse, exception *Exception, err error) {
-	formValues := initFormValues(body, mediaUrl, statusCallback, applicationSid)
+	formValues := initFormValues(to, body, mediaUrl, statusCallback, applicationSid)
 	formValues.Set("MessagingServiceSid", messagingServiceSid)
 
 	smsResponse, exception, err = twilio.sendMessage(formValues)
